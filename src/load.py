@@ -3,7 +3,7 @@ import os
 
 
 
-datasets_dir = '/data/datasets/'
+datasets_dir = '/home/ubuntu/projects/excitation-cluster-dropout/data/'
 
 def one_hot(x,n):
 	if type(x) == list:

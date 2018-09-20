@@ -1,10 +1,15 @@
-import tensorflow as tf
-import DataSet
-import cPickle
-import numpy as np
+import os
+import argparse
 import time
-
+import cPickle
 from ConfigParser import *
+
+import tensorflow as tf
+import numpy as np
+
+import dataset
+import utils
+
 
 #   Initialize weights with a small amount of noise for symmetry breaking, and to prevent 0 gradients
 #   With ReLU neurons, it is good practice to initialize with a slightly positive bias to avoid "dead neurons".
@@ -31,7 +36,7 @@ def max_pool_3x3(x):
 def trainModel(expDir='null', ii=0):
     data_ = open('../data_dir.txt','r')
     datasets_dir = data_.readline().split()[0]
-    mnist = DataSet.read_data_sets(data_dir=datasets_dir)
+    mnist = dataset.read_data_sets(data_dir=datasets_dir)
     
     config = ConfigParser()
     config.read(expDir+'input_configuration')
@@ -288,10 +293,12 @@ if __name__=="__main__":
     import glob
     import time
 
+    rootDir = utils.rootDir()
+
     iteration = sys.argv[2]
     folder = sys.argv[1]
-    expDir = glob.glob('./experiments/'+ str(folder))[0]
-    print expDir 
+    expDir = glob.glob(os.path.join(rootDir, 'experiments', str(folder)))[0]
+    print expDir
     print iteration
 
     start = time.time()

@@ -6,14 +6,14 @@ from tensorflow.contrib.learn.python.learn.datasets import base
 from tensorflow.python.framework import dtypes
 
 
-class DataSet(object):
+class Dataset(object):
 
   def __init__(self,
                images,
                labels,
                dtype=dtypes.float32,
                reshape=False):
-    """Construct a DataSet.
+    """Construct a Dataset.
     `dtype` can be either `uint8` to leave the input as `[0, 255]`, 
     or `float32` to rescale into `[0, 1]`.
     """
@@ -90,12 +90,12 @@ def read_data_sets(data_dir='/data/datasets/',
     train_images = train_images[validation_size:]
     train_labels = train_labels[validation_size:]
 
-    train = DataSet(train_images, train_labels, dtype=dtype, reshape=reshape)
-    validation = DataSet(validation_images,
+    train = Dataset(train_images, train_labels, dtype=dtype, reshape=reshape)
+    validation = Dataset(validation_images,
                        validation_labels,
                        dtype=dtype,
                        reshape=reshape)
                        
-    test = DataSet(test_images, test_labels, dtype=dtype, reshape=reshape)
+    test = Dataset(test_images, test_labels, dtype=dtype, reshape=reshape)
 
     return base.Datasets(train=train, validation=validation, test=test)
