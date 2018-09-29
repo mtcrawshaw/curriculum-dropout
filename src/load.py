@@ -20,8 +20,7 @@ def unpickle(file):
     fo.close()
     return dict
 
-def mnist(ntrain=60000,ntest=10000,onehot=True,noCircles=0,color='white'):
-	data_dir = os.path.join(datasets_dir,'mnist/')
+def mnist(data_dir, ntrain=60000,ntest=10000,onehot=True,noCircles=0,color='white'):
 	fd = open(os.path.join(data_dir,'train-images-idx3-ubyte'))
 	loaded = np.fromfile(file=fd,dtype=np.uint8)
 	trX = loaded[16:].reshape((60000,28*28)).astype(float)

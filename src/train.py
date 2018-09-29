@@ -34,10 +34,6 @@ def max_pool_3x3(x):
     return tf.nn.max_pool(x, ksize=[1, 3, 3, 1], strides=[1, 2, 2, 1], padding='SAME')
 
 def trainModel(expDir='null', ii=0):
-    data_ = open('../data_dir.txt','r')
-    datasets_dir = data_.readline().split()[0]
-    mnist = dataset.read_data_sets(data_dir=datasets_dir)
-    
     config = ConfigParser()
     config.read(expDir+'input_configuration')
 
@@ -50,6 +46,10 @@ def trainModel(expDir='null', ii=0):
     p_fc = config.getfloat('MAIN_PARAMETER_SETTING','p_fc')
     noise = config.getfloat('MAIN_PARAMETER_SETTING','noise')
     numepochs = config.getint('MAIN_PARAMETER_SETTING','training_epochs')
+    dataset_name = config.get('MAIN_PARAMETER_SETTING', 'dataset_name')
+
+    dataPath = utils.dataPathFromName(dataset_name)
+    mnist = dataset.read_data_sets(data_dir=dataPath)
 
     if mode == 'scheduled_dropout':
         def _prob(x, gamma, p):
