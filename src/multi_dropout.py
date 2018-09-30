@@ -25,8 +25,6 @@ def multi_dropout(x, keep_prob, name=None):
     random_tensor += random_ops.random_uniform(array_ops.shape(keep_prob), dtype=x.dtype)
 
     # 0. if [keep_prob, 1.0) and 1. if [1.0, 1.0 + keep_prob)
-    binary_tensor = math_ops.floor(keep_prob)
-    ret = math_ops.div(x, keep_prob) * binary_tensor
-    if not context.executing_eagerly():
-      ret.set_shape(x.get_shape())
-    return ret
+    binary_tensor = math_ops.floor(random_tensor)
+    #ret = math_ops.div(x, keep_prob) * binary_tensor
+    return binary_tensor

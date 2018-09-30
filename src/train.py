@@ -143,6 +143,8 @@ def trainModel(expDir='null', ii=0):
     # Loss Function for evaluation (i.e. compare with actual labels)
     cross_entropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=y_conv, labels=y_))
 
+    droppedOutLayers = [h_pool1, h_pool2_flat, h_fc1, h_fc2]
+
     # the actual operation on the graph
     train_step = tf.train.AdamOptimizer(l_rate,beta1=momentum).minimize(cross_entropy)
     #train_step = tf.train.GradientDescentOptimizer(1e-4,beta1=0.999).minimize(cross_entropy)
@@ -262,6 +264,8 @@ def trainModel(expDir='null', ii=0):
         # SCHEDULING DROPOUT: no droput at first, tends to 0.5 as iterations increase
         batch = mnist.train.next_batch(batchsize)
         
+	activations = sess.run(droppedOutLayers, feed_dict={x: batch[0], y_: batch[1]})
+
         train_step.run(feed_dict={x: batch[0], y_: batch[1], 
                             keep_prob_input: _prob_input,    #0.9
                             keep_prob_conv: _prob_conv,    #0.75
